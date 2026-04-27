@@ -24,9 +24,7 @@ test.describe('Amazon Purchase Flow - iPhone', () => {
         logger.test(data.testName, 'Adding to cart...');
         await amazon.addToCart();
 
-        // Stable Assertion: Check for success message instead of badge count
-        const body = page.locator('body');
-        await expect(body).toContainText(/Added to Cart|added to Cart|Proceed to checkout/i);
+        await expect(page.locator('body')).toContainText(/Added to Cart|added to Cart|Proceed to checkout/i);
         
         logger.test(data.testName, 'Product successfully added to cart');
     });
