@@ -3,7 +3,8 @@ const { expect } = require('@playwright/test');
 class AmazonPage {
     constructor(page) {
         this.page = page;
-        this.productLinkSelector = 'h2 a.a-link-normal, .s-main-slot .s-result-item h2 a';
+        // The link is the parent of the h2 in this layout
+        this.productLinkSelector = 'a:has(h2), .s-result-item h2 a, h2 a';
     }
 
     async navigate() {
@@ -11,10 +12,11 @@ class AmazonPage {
     }
 
     async searchFor(term) {
-        // Direct navigation to search results is more stable than interacting with the search bar
         const searchUrl = `https://www.amazon.com/s?k=${encodeURIComponent(term)}`;
         await this.page.goto(searchUrl, { waitUntil: 'domcontentloaded', timeout: 30000 });
-        await this.page.waitForSelector('.s-main-slot', { timeout: 15000 });
+        // Wait for any result link to appear
+        await this.page.waitForSelector('a:has(h2), h2', { timeout: 15000 });
+        await this.page.waitForTimeout(2000);
     }
 
     async selectFirstProduct() {
@@ -34,17 +36,18 @@ class AmazonPage {
 
     async getProductPrice() {
         const priceSelectors = [
-            '#corePriceDisplay_desktop_feature_div .a-offscreen',
             '.a-price .a-offscreen',
+            '#corePriceDisplay_desktop_feature_div .a-offscreen',
             '#priceblock_ourprice',
-            'span.a-price-whole'
+            '.a-price-whole'
         ];
         
         for (const selector of priceSelectors) {
             try {
                 const element = this.page.locator(selector).first();
                 if (await element.isVisible({ timeout: 3000 })) {
-                    return await element.textContent();
+                    const text = await element.textContent();
+                    if (text && text.trim().length > 0) return text.trim();
                 }
             } catch (e) {}
         }
@@ -52,7 +55,7 @@ class AmazonPage {
     }
 
     async addToCart() {
-        const addToCartBtn = this.page.locator('#add-to-cart-button, input[name="submit.add-to-cart"]').first();
+        const addToCartBtn = this.page.locator('#add-to-cart-button, input[name="submit.add-to-cart"], #add-to-cart-button-ubb').first();
         await addToCartBtn.click({ force: true });
 
         // Handle common popups
@@ -66,7 +69,8 @@ class AmazonPage {
 
     async getCartCount() {
         try {
-            return await this.page.locator('#nav-cart-count').textContent();
+            const count = await this.page.locator('#nav-cart-count').textContent();
+            return count ? count.trim() : "0";
         } catch (e) {
             return "0";
         }
