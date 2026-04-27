@@ -51,7 +51,7 @@ testmu-ai-assignment/
 
 ### 1. Clone the repository
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/amitkumaryadav2672/testmu-ai-assignment.git
 cd testmu-ai-assignment
 ```
 
@@ -86,5 +86,5 @@ To run these tests on the LambdaTest Cloud, update the `playwright.config.js` wi
 
 ## 👨‍💻 Author
 **Amit Kumar Yadav**
-- GitHub: [@your-username](https://github.com/your-username)
+- GitHub: [amitkumaryadav2672](https://github.com/amitkumaryadav2672)
 - Role: Customer Engineering Intern Applicant

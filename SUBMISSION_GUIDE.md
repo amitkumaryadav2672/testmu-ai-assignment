@@ -19,7 +19,7 @@ git add .
 git commit -m "Initial commit: Amazon Automation Assignment"
 # Create a new repository on GitHub named 'testmu-ai-assignment'
 # Then run:
-git remote add origin https://github.com/YOUR_USERNAME/testmu-ai-assignment.git
+git remote add origin https://github.com/amitkumaryadav2672/testmu-ai-assignment.git
 git branch -M main
 git push -u origin main
 ```
