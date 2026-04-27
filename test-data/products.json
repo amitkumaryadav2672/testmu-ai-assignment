@@ -1,0 +1,10 @@
+{
+    "iphone": {
+        "searchTerm": "iPhone",
+        "testName": "Amazon iPhone Test"
+    },
+    "galaxy": {
+        "searchTerm": "Galaxy device",
+        "testName": "Amazon Galaxy Test"
+    }
+}
