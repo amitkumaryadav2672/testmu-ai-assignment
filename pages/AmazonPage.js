@@ -208,16 +208,20 @@ class AmazonPage {
     }
 
     async handlePopups() {
-        // Specifically look for the Extra Protection / Warranty modal
-        try {
-            // isVisible() checks instantly, so we must use waitFor() to give the modal time to animate in
-            const noThanksBtn = this.page.locator('#attachSiNoCoverage-announce, #attachSiNoCoverage, text="No thanks", text="No Thanks", input[aria-labelledby="attachSiNoCoverage-announce"]').first();
-            await noThanksBtn.waitFor({ state: 'visible', timeout: 4000 });
-            logger.info('Extra protection modal detected! Clicking No Thanks...');
-            await noThanksBtn.click({ force: true });
-            await this.page.waitForTimeout(1500); // Give it time to close and update cart
-        } catch (e) {
-            // Modal did not appear, safely ignore
+        // Repeatedly check for Extra Protection / Warranty modal for up to 5 seconds
+        for (let i = 0; i < 10; i++) {
+            try {
+                const noThanksBtn = this.page.locator('button:has-text("No thanks"), button:has-text("No Thanks"), input[value="No thanks"], input[value="No Thanks"], #attachSiNoCoverage-announce, #attachSiNoCoverage, span:has-text("No thanks")').first();
+                if (await noThanksBtn.isVisible()) {
+                    logger.info('Extra protection modal detected! Clicking No Thanks...');
+                    await noThanksBtn.click({ force: true });
+                    await this.page.waitForTimeout(1500); // Give it time to close and update cart
+                    break; // Successfully clicked, exit loop
+                }
+            } catch (e) {
+                // Ignore errors
+            }
+            await this.page.waitForTimeout(500);
         }
 
         await this.clearPopups();
