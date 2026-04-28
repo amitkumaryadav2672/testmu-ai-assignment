@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 const { defineConfig } = require('@playwright/test');
 
 module.exports = defineConfig({
@@ -23,8 +21,8 @@ module.exports = defineConfig({
             platform: 'Windows 11',
             build: 'TestMu Assignment Build',
             name: 'Amazon Parallel Test',
-            user: process.env.LT_USERNAME,
-            accessKey: process.env.LT_ACCESS_KEY
+            user: "yadavamit847412",
+            accessKey: "LT_ctiGdScq5bQoWrk9nCVtUh82ijlgPXmocHpyfuPCjQnYtN3"
           }))}`
         }
       }
