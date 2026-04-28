@@ -28,8 +28,5 @@ test.describe('Amazon Purchase Flow - Galaxy', () => {
         await amazon.verifyAddedToCart();
         
         logger.test(data.testName, 'Product successfully added to cart');
-        
-        // As requested: Keep the browser open indefinitely until manually closed
-        await page.pause();
     });
 });
