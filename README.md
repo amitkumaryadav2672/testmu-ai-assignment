@@ -1,90 +1,77 @@
-# TestMu AI - Amazon Automation Assignment
+# Amazon Automation Assignment (Playwright)
 
-This repository contains the automation assignment for the **Customer Engineering Intern** role at **TestMu AI**.
+This project automates the purchase flow on Amazon using Playwright and Node.js. It follows the Page Object Model (POM) pattern for maintainability and includes robust handling for dynamic e-commerce elements.
 
-## 🚀 Project Overview
-The project automates two search-and-add-to-cart scenarios on Amazon.com using **Playwright** with **JavaScript**. It follows the **Page Object Model (POM)** design pattern for scalability and maintainability.
+## Tech Stack
+* **Playwright** (JavaScript)
+* **Node.js**
+* **Page Object Model** (POM) Architecture
 
-### Features
-- **Parallel Execution**: Both test cases run simultaneously to optimize execution time.
-- **Page Object Model**: Encapsulated UI logic in `pages/` directory.
-- **Reporting**: Automated HTML reports generated after each run.
-- **Logging**: Custom logger for detailed console output.
-- **CI/CD Ready**: Integrated with GitHub Actions.
-
----
-
-## 🛠️ Tech Stack
-- **Framework**: [Playwright](https://playwright.dev/)
-- **Language**: JavaScript (Node.js)
-- **Pattern**: Page Object Model (POM)
-- **Reporting**: Playwright HTML Reporter
+## Key Features
+* **Smart Search**: Automatically searches for specified products from `products.json`.
+* **Price Extraction**: Robustly captures device prices across different Amazon layouts.
+* **Intelligent Add-to-Cart**: Handles both direct "Add to Cart" and multi-seller "See Buying Options" flows.
+* **Popup Resilience**: Automatically dismisses "Protection Plan" and "Location" overlays.
+* **Professional Reporting**: Generates HTML reports with screenshots and videos on failure.
 
 ---
 
-## 📁 Project Structure
-```text
-testmu-ai-assignment/
-│── tests/                  # Test specification files
-│   ├── amazon-iphone.spec.js
-│   └── amazon-galaxy.spec.js
-├── pages/                  # Page Object classes (POM)
-│   └── AmazonPage.js
-├── test-data/              # JSON data for tests
-│   └── products.json
-├── utils/                  # Helper utilities and Logger
-│   └── logger.js
-├── reports/                # HTML test reports (generated)
-├── playwright.config.js    # Playwright configuration (Parallelism, Browsers)
-└── README.md               # Project documentation
-```
+## How to Run
 
----
-
-## ⚙️ Prerequisites
-- [Node.js](https://nodejs.org/) (v16 or higher)
-- [npm](https://www.npmjs.com/)
-
----
-
-## 🚀 Getting Started
-
-### 1. Clone the repository
-```bash
-git clone https://github.com/amitkumaryadav2672/testmu-ai-assignment.git
-cd testmu-ai-assignment
-```
-
-### 2. Install dependencies
+### 1. Install Dependencies
 ```bash
 npm install
+```
+
+### 2. Install Playwright Browsers
+```bash
 npx playwright install
 ```
 
-### 3. Run Tests (Parallel)
-To run all tests in parallel mode:
+### 3. Run All Tests
 ```bash
 npx playwright test
 ```
 
-### 4. View Report
-After the tests complete, view the detailed HTML report:
+### 4. Watch the Automation (Headed Mode)
 ```bash
-npx playwright show-report reports
+npx playwright test --headed
+```
+
+### 5. View the Results Report
+```bash
+npx playwright show-report
 ```
 
 ---
 
-## ☁️ LambdaTest Integration (Bonus)
-To run these tests on the LambdaTest Cloud, update the `playwright.config.js` with your credentials:
-1. Set environment variables:
-   - `LT_USERNAME`: Your LambdaTest username
-   - `LT_ACCESS_KEY`: Your LambdaTest access key
-2. Uncomment the `lambdatest-chrome` project in `playwright.config.js`.
+## Parallel Execution
+By default, this project is configured to run tests in parallel using Playwright's `workers: 2` configuration. When you run `npx playwright test`, both the iPhone and Galaxy tests will execute simultaneously in separate browser instances to save time.
 
 ---
 
-## 👨‍💻 Author
-**Amit Kumar Yadav**
-- GitHub: [amitkumaryadav2672](https://github.com/amitkumaryadav2672)
-- Role: Customer Engineering Intern Applicant
+## Folder Structure
+```text
+testmu-ai-assignment/
+│ package.json
+│ playwright.config.js
+│ README.md
+│ .gitignore
+│
+├── tests/              # Contains the Playwright spec files (amazon-iphone, amazon-galaxy)
+├── pages/              # Contains the Page Object Model (AmazonPage.js)
+├── test-data/          # Contains JSON test data (products.json)
+└── utils/              # Contains custom logger utilities
+```
+
+---
+
+## Test Scenarios
+* **iPhone 13 Flow**: Navigates, searches, extracts price, and adds to cart.
+* **Samsung Galaxy A15 Flow**: Navigates, searches, extracts price, and handles fallback buying options.
+
+## Engineering Notes
+Amazon uses a highly dynamic UI. This framework implements a **fallback strategy**: if the standard "Add to Cart" button is missing (common for high-demand items), it automatically switches to the "Buying Options" workflow to ensure the test completes successfully.
+
+---
+**Author**: Amit Kumar Yadav

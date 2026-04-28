@@ -14,8 +14,8 @@ test.describe('Amazon Purchase Flow - Galaxy', () => {
         logger.test(data.testName, `Searching for: ${data.searchTerm}`);
         await amazon.searchFor(data.searchTerm);
 
-        logger.test(data.testName, 'Selecting first product...');
-        await amazon.selectFirstProduct();
+        logger.test(data.testName, 'Selecting valid product...');
+        await amazon.selectValidProduct();
 
         const price = await amazon.getProductPrice();
         logger.test(data.testName, `Device Price: ${price}`);
@@ -25,9 +25,11 @@ test.describe('Amazon Purchase Flow - Galaxy', () => {
         await amazon.addToCart();
 
         // Stable Assertion: Check for success message instead of badge count
-        const body = page.locator('body');
-        await expect(body).toContainText(/Added to Cart|added to Cart|Proceed to checkout/i);
+        await amazon.verifyAddedToCart();
         
         logger.test(data.testName, 'Product successfully added to cart');
+        
+        // As requested: Keep the browser open indefinitely until manually closed
+        await page.pause();
     });
 });

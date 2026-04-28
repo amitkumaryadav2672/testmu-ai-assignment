@@ -1,10 +1,12 @@
 {
-    "iphone": {
-        "searchTerm": "iPhone",
-        "testName": "Amazon iPhone Test"
-    },
-    "galaxy": {
-        "searchTerm": "Galaxy device",
-        "testName": "Amazon Galaxy Test"
-    }
+  "iphone": {
+    "testName": "Amazon iPhone Test",
+    "searchTerm": "Apple iPhone 13 128GB Blue Unlocked",
+    "expectedPriceLabel": "Price for iPhone"
+  },
+  "galaxy": {
+    "testName": "Amazon Galaxy Test",
+    "searchTerm": "Samsung Galaxy A15 128GB Unlocked Blue",
+    "expectedPriceLabel": "Price for Galaxy"
+  }
 }
