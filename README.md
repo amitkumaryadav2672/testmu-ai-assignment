@@ -1,6 +1,6 @@
 # Amazon Automation Assignment
 
-This repository contains the completed automated test cases for the Amazon Purchase Flow assignment. The framework is built using **Playwright** and **JavaScript/Node.js**, utilizing the Page Object Model (POM) design pattern for high maintainability and robustness against Amazon's dynamic user interface.
+This repository contains the completed automated test cases for the Amazon Purchase Flow assignment. The framework is built using **Playwright** and **JavaScript**, utilizing the Page Object Model (POM) design pattern for high maintainability and robustness against Amazon's dynamic user interface.
 
 ---
 
@@ -18,8 +18,8 @@ This repository contains the completed automated test cases for the Amazon Purch
 
 Follow these steps to execute the test suite on your local machine:
 
-### 1. Install Node Dependencies
-Ensure you have Node.js installed, then run:
+### 1. Install Dependencies
+Ensure you have the required packages installed by running:
 ```bash
 npm install
 ```
