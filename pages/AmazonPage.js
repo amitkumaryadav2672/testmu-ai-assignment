@@ -208,15 +208,34 @@ class AmazonPage {
     }
 
     async handlePopups() {
-        // Repeatedly check for Extra Protection / Warranty modal for up to 5 seconds
-        for (let i = 0; i < 10; i++) {
+        // Repeatedly check for Extra Protection / Warranty modal for up to 10 seconds
+        for (let i = 0; i < 20; i++) {
             try {
-                const noThanksBtn = this.page.locator('button:has-text("No thanks"), button:has-text("No Thanks"), input[value="No thanks"], input[value="No Thanks"], #attachSiNoCoverage-announce, #attachSiNoCoverage, span:has-text("No thanks")').first();
+                const noThanksBtn = this.page.locator([
+                    '#attachSiNoCoverage',
+                    'span[id="attachSiNoCoverage-announce"]',
+                    'input[aria-labelledby="attachSiNoCoverage-announce"]',
+                    'button:has-text("No thanks")',
+                    'button:has-text("No Thanks")',
+                    'input[value="No thanks"]',
+                    'input[value="No Thanks"]',
+                    'span:has-text("No thanks")'
+                ].join(', ')).first();
+
                 if (await noThanksBtn.isVisible()) {
                     logger.info('Extra protection modal detected! Clicking No Thanks...');
                     await noThanksBtn.click({ force: true });
-                    await this.page.waitForTimeout(1500); // Give it time to close and update cart
+                    await this.page.waitForTimeout(2000); // Give it time to close and update cart
                     break; // Successfully clicked, exit loop
+                }
+
+                // Also check for the close button as a fallback
+                const closeBtn = this.page.locator('.a-popover-header button[data-action="a-popover-close"], #attach-close_sideSheet-link').first();
+                if (await closeBtn.isVisible()) {
+                    logger.info('Extra protection modal detected! Clicking X to close...');
+                    await closeBtn.click({ force: true });
+                    await this.page.waitForTimeout(2000);
+                    break;
                 }
             } catch (e) {
                 // Ignore errors

@@ -14,32 +14,57 @@ This repository contains the completed automated test cases for the Amazon Purch
 
 ---
 
-## 🚀 How to Run the Code
+## 🚀 How to Run the Code (Step-by-Step Guide)
 
-Follow these steps to execute the test suite on your local machine:
+Follow these exact steps to set up and execute the test suite from scratch on your local machine:
 
-### 1. Install Dependencies
-Ensure you have the required packages installed by running:
+### 1. Prerequisites & Setup
+Before you begin, ensure you have [Node.js](https://nodejs.org/) installed on your system.
+
+First, clone this repository to your local machine and navigate into the project folder:
+```bash
+git clone https://github.com/amitkumaryadav2672/testmu-ai-assignment.git
+cd testmu-ai-assignment
+```
+
+### 2. Install Dependencies
+Install all the required Node packages (including Playwright) by running:
 ```bash
 npm install
 ```
 
-### 2. Install Playwright Browsers
-Playwright requires specific browser binaries (Chromium) to execute the tests:
+### 3. Install Playwright Browsers
+Playwright requires specific browser binaries (like Chromium) to execute the tests. Download them by running:
 ```bash
 npx playwright install
 ```
 
-### 3. Execute the Tests (Parallel Mode)
-Run the following command to execute both test cases simultaneously in parallel:
+### 4. Execute the Tests
+
+You can run the tests either simultaneously (parallel mode) or individually.
+
+#### Option A: Run All Tests in Parallel (Default)
+By default, the framework is configured to run both the iPhone and Galaxy test cases at the exact same time using 2 concurrent workers. This significantly speeds up execution.
 ```bash
 npx playwright test
 ```
+*(Note: What happens here is that two browser windows will open simultaneously on your screen. One will execute the iPhone purchase flow independently, and the other will execute the Galaxy purchase flow independently. The terminal will output the extracted device prices for both as they are added to the cart.)*
 
-*(Note: The terminal will output the extracted device prices for both the iPhone and Samsung Galaxy as they are added to the cart.)*
+#### Option B: Run a Single Test Case
+If you only want to execute one specific test case without running the other, you can pass the specific file path to the command:
 
-### 4. View the Results Report
-Once the tests finish, you can view the detailed HTML report by running:
+**Run only the iPhone test:**
+```bash
+npx playwright test tests/amazon-iphone.spec.js
+```
+
+**Run only the Galaxy test:**
+```bash
+npx playwright test tests/amazon-galaxy.spec.js
+```
+
+### 5. View the Results Report
+Once the tests finish, Playwright automatically generates a detailed HTML report of the test run. You can view it by running:
 ```bash
 npx playwright show-report
 ```

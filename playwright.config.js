@@ -1,31 +1,25 @@
-const { defineConfig } = require('@playwright/test');
+const { defineConfig, devices } = require('@playwright/test');
 
 module.exports = defineConfig({
   testDir: './tests',
   timeout: 300000,
   fullyParallel: true,
+  workers: 2, // Forces parallel execution
+  reporter: [['html', { open: 'never' }], ['list']],
 
   use: {
-    headless: true
+    headless: false, // This forces the browsers to open visually on your screen!
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
+    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    viewport: { width: 1280, height: 720 },
   },
 
   projects: [
     {
-      name: 'LambdaTest Chrome',
-      use: {
-        browserName: 'chromium',
-        connectOptions: {
-          wsEndpoint: `wss://cdp.lambdatest.com/playwright?capabilities=${encodeURIComponent(JSON.stringify({
-            browserName: 'Chrome',
-            browserVersion: 'latest',
-            platform: 'Windows 11',
-            build: 'TestMu Assignment Build',
-            name: 'Amazon Parallel Test',
-            user: "yadavamit847412",
-            accessKey: "LT_ctiGdScq5bQoWrk9nCVtUh82ijlgPXmocHpyfuPCjQnYtN3"
-          }))}`
-        }
-      }
+      name: 'Local Chrome',
+      use: { ...devices['Desktop Chrome'] },
     }
+    // Note: LambdaTest Cloud integration was removed so the browsers open locally on your computer instead of the cloud.
   ]
 });
